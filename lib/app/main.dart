@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:taxi_app/app/features/onboarding/ui/pages/onboarding_page.dart';
+import 'package:flutter/services.dart';
 
-import 'shared/themes/themes.dart';
+import 'features/onboarding/ui/pages/onboarding_page.dart';
+import 'shared/design_system/design_system.dart';
 
 void main() {
   runApp(const App());
@@ -10,10 +11,13 @@ void main() {
 class App extends StatelessWidget {
   const App({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark));
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme,
       home: const OnboardingPage(),

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -10,8 +8,9 @@ class AppColors {
   static Color accentColor = const Color(0xFFFFC727);
 
   static Color cardBackgroundColor = const Color(0xFFF0f1f5);
+  // static Color shadowColor = const Color(0xfff00000026);
+  static Color shadowColor = const Color.fromARGB(15, 0, 0, 0);
   static MaterialAccentColor errorBackgroundColor = Colors.redAccent;
-
   static const Color black = Colors.black;
   static const Color black54 = Colors.black54;
   static const Color black87 = Colors.black87;

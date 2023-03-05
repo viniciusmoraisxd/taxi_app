@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'app_color.dart';
+import 'app_colors.dart';
 
 class AppTheme {
   static ThemeData get lightTheme => ThemeData(
       fontFamily: "Gotham-SSm",
-      useMaterial3: false,
+      useMaterial3: true,
       primarySwatch: AppColors.primaryCustomColor,
       appBarTheme: AppBarTheme(
           elevation: 0,
