@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -16,9 +14,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
       return SingleChildScrollView(
         child: Container(
           constraints: BoxConstraints(minHeight: constraints.maxHeight),
-          child: Column(children: const [
-
-          ],),
+          child: Column(
+            children: const [],
+          ),
         ),
       );
     }));
