@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
+import '../shared.dart';
 
 class AppTheme {
-  static ThemeData get lightTheme => ThemeData(
+  static ThemeData lightTheme(BuildContext context) => ThemeData(
       fontFamily: "Gotham-SSm",
       useMaterial3: true,
       primarySwatch: AppColors.primaryCustomColor,
@@ -14,17 +14,21 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           minimumSize: const Size.fromHeight(52),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
+          textStyle: AppTypography.customLabelLarge(context),
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
           backgroundColor: AppColors.primaryColor,
+          foregroundColor: AppColors.white,
         ),
       ),
+
+      // elevatedButtonTheme: ElevatedButtonThemeData(
+      //     style: ButtonStyle(
+      //         backgroundColor: MaterialStateProperty.all<Color>(
+      //   AppColors.primaryColor,
+      // ))),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           minimumSize: const Size.fromHeight(52),

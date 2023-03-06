@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'features/onboarding/ui/pages/onboarding_page.dart';
-import 'shared/design_system/design_system.dart';
+import 'package:taxi_app/app/features/features.dart';
+import 'shared/shared.dart';
 
 void main() {
   runApp(const App());
@@ -19,8 +18,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: AppTheme.lightTheme,
-      home: const OnboardingPage(),
+      theme: AppTheme.lightTheme(context),
+      home: const SignInPage(),
     );
   }
 }

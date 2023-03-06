@@ -42,22 +42,23 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ),
               Flexible(
                 child: PageView.builder(
-                    controller: pageController,
-                    itemCount: onboardingContent.length,
-                    onPageChanged: (value) => setState(() {
-                          _currentIndex = value;
-                        }),
-                    itemBuilder: (context, index) => OnboardingContentWidget(
-                        height: constraints.maxHeight,
-                        title: onboardingContent[index].title,
-                        description: onboardingContent[index].description,
-                        image: onboardingContent[index].image)),
+                  controller: pageController,
+                  itemCount: onboardingContent.length,
+                  onPageChanged: (value) => setState(() {
+                    _currentIndex = value;
+                  }),
+                  itemBuilder: (context, index) => OnboardingContentWidget(
+                    height: constraints.maxHeight,
+                    title: onboardingContent[index].title,
+                    description: onboardingContent[index].description,
+                    image: onboardingContent[index].image,
+                  ),
+                ),
               ),
               OnboardingNavigationWidget(
-                onboardingContent: onboardingContent,
-                pageController: pageController,
-                currentIndex: _currentIndex,
-              ),
+                  onboardingContent: onboardingContent,
+                  pageController: pageController,
+                  currentIndex: _currentIndex),
             ],
           ),
         );
