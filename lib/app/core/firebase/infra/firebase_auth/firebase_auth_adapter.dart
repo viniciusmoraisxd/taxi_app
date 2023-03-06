@@ -1,0 +1,49 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../data/data.dart';
+
+class FirebaseAuthAdapter implements FirebaseAuthClient {
+  final FirebaseAuth firebaseAuth;
+
+  FirebaseAuthAdapter({required this.firebaseAuth});
+
+  @override
+  Future<void> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
+    try {
+      await firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "user-disabled":
+          throw FirebaseSignInError.userDisabled;
+        case "user-not-found":
+          throw FirebaseSignInError.userNotFound;
+        case "invalid-email":
+          throw FirebaseSignInError.invalidEmail;
+        case "wrong-password":
+          throw FirebaseSignInError.wrongPassword;
+      }
+    }
+  }
+
+  @override
+  Future<void> createUserWithEmailAndPassword(
+      {required String email, required String password}) async {
+    try {
+      await firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          throw FirebaseSignUpError.operationNotAllowed;
+        case "email-already-in-use":
+          throw FirebaseSignUpError.emailAlreadyInUse;
+        case "invalid-email":
+          throw FirebaseSignUpError.invalidEmail;
+        case "weak-password":
+          throw FirebaseSignUpError.weakPassword;
+      }
+    }
+  }
+}

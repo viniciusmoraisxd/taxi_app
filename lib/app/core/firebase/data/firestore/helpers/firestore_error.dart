@@ -1,0 +1,3 @@
+enum FirebaseFirestoreError{
+  accessDenied, unexpected
+}
