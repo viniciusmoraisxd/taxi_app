@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:taxi_app/app/features/features.dart';
 import 'shared/shared.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const App());
 }
 
