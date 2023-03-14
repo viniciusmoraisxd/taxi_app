@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../shared/shared.dart';
+import '../../ui.dart';
 
 class FormContainerWidget extends StatefulWidget {
   final double height;
@@ -29,11 +30,11 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
           label: "E-mail",
           textInputType: TextInputType.emailAddress,
           prefix: const Icon(Icons.mail_outline),
-          // validator: (String? value) =>
-          //     InputValidators.emailFieldValidator(email: value),
+          validator: (String? value) =>
+              InputValidators.emailFieldValidator(email: value),
         ),
         const SizedBox(
-          height: 10,
+          height: 16,
         ),
         CustomTextFormField(
           controller: widget.passwordController,
@@ -42,8 +43,8 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
           ),
           label: "Senha",
           obscureText: obscurePassword,
-          // validator: (String? value) =>
-          //     InputValidators.requiredFieldValidator(value: value),
+          validator: (String? value) =>
+              InputValidators.requiredFieldValidator(value: value),
           suffix: IconButton(
             icon:
                 Icon(obscurePassword ? Icons.visibility : Icons.visibility_off),

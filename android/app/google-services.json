@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "663749091168",
+    "project_id": "taxiapp-3933a",
+    "storage_bucket": "taxiapp-3933a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663749091168:android:54259f264e52206a220805",
+        "android_client_info": {
+          "package_name": "br.com.viniciusmorais.taxi_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663749091168-mj903e788krghj37sm5kgre7bqojaqj6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA1Px7Jdf9sCOGkUkcnka1SKDjbjlTP-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663749091168-mj903e788krghj37sm5kgre7bqojaqj6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
