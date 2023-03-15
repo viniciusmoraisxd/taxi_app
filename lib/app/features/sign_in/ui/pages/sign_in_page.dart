@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:taxi_app/app/shared/shared.dart';
 
+import 'package:provider/provider.dart';
+
+import '../../../../shared/shared.dart';
+
+import '../../controllers/sign_in.dart';
+import '../ui.dart';
 import 'widgets/widgets.dart';
 
 class SignInPage extends StatefulWidget {
@@ -11,18 +17,22 @@ class SignInPage extends StatefulWidget {
   State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignInPageState extends State<SignInPage> with UIErrorManager {
+  late SignInController controller;
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
+    controller = context.read<SignInController>();
     super.initState();
   }
 
   @override
   void dispose() {
+    controller.dispose();
     super.dispose();
   }
 
@@ -42,6 +52,7 @@ class _SignInPageState extends State<SignInPage> {
               key: _formKey,
               child: Column(
                 children: [
+                  // HeaderWidget(height: constraints.maxHeight),
                   HeaderWidget(
                     height: constraints.maxHeight,
                     image: AppImages.login,
@@ -52,48 +63,82 @@ class _SignInPageState extends State<SignInPage> {
                       height: constraints.maxHeight,
                       emailController: emailController,
                       passwordController: passwordController),
-                  Column(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {}
-                        },
-                        child: const Text("Entrar"),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: constraints.maxHeight * 0.09),
-                        child: Column(
-                          children: [
-                            // const SizedBox(height: 6),
-                            GestureDetector(
-                              key: const Key("signupButton"),
-                              onTap: () {
-                                Navigator.of(context).pushNamed("/sign_up");
-                              },
-                              child: RichText(
-                                key: const Key("Registre-se"),
-                                text: TextSpan(
-                                    text: "Não possui uma conta?",
+                  ValueListenableBuilder(
+                    valueListenable: context.read<SignInController>(),
+                    builder: (context, value, child) {
+                      if (value is SignInSuccess) {
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, "/home", (route) => false);
+                        });
+                      }
+
+                      if (value is SignInFailed) {
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          handleError(context, uiError: value.uiError);
+                        });
+                      }
+
+                      return Column(
+                        children: [
+                          ElevatedButton(
+                            onPressed: value is SignInLoading
+                                ? null
+                                : () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      await controller(
+                                          email: emailController.text,
+                                          password: passwordController.text);
+                                    }
+                                  },
+                            child: value is SignInLoading
+                                ? const CircularProgressIndicator(
+                                    color: AppColors.white,
+                                  )
+                                : const Text(
+                                    "Entrar",
                                     style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.primaryColor,
-                                        fontFamily: "Gotham-SSm"),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text: " Registre-se",
-                                          style: TextStyle(
-                                              color: AppColors.primaryColor,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600)),
-                                    ]),
-                              ),
+                                      fontSize: 12,
+                                      fontFamily: "Gotham-SSm",
+                                    ),
+                                  ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: constraints.maxHeight * 0.09),
+                            child: Column(
+                              children: [
+                                // const SizedBox(height: 6),
+                                GestureDetector(
+                                  key: const Key("signupButton"),
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed("/sign_up");
+                                  },
+                                  child: RichText(
+                                    key: const Key("Registre-se"),
+                                    text: TextSpan(
+                                        text: "Não possui uma conta?",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: AppColors.primaryColor,
+                                            fontFamily: "Gotham-SSm"),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                              text: " Registre-se",
+                                              style: TextStyle(
+                                                  color: AppColors.primaryColor,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600)),
+                                        ]),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  )
+                          )
+                        ],
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
