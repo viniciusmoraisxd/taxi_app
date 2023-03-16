@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/shared.dart';
-import '../../ui.dart';
+import '../../../../shared/shared.dart';
+import '../ui.dart';
 
 class FormContainerWidget extends StatefulWidget {
   final double height;
@@ -63,7 +63,7 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
             margin: const EdgeInsets.only(top: 16),
             alignment: Alignment.centerRight,
             child: Text(
-              "Esqueceu sua senha?",
+              "Esqueceu a senha?",
               style: TextStyle(
                   color: AppColors.primaryColor,
                   fontSize: 12,

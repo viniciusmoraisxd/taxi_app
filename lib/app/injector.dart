@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import 'core/core.dart';
-import 'features/sign_in/controllers/sign_in.dart';
 import 'features/sign_in/data/data.dart';
+import 'features/sign_in/presentation/presentation.dart';
 
 
 class Injector {
@@ -34,7 +34,7 @@ class Injector {
         // Controllers
         ChangeNotifierProvider(
             create: (context) =>
-                SignInController(signIn: context.read<RemoteSignIn>())),
+                ValueNotifierSignInPresenter(signIn: context.read<RemoteSignIn>())),
         // ChangeNotifierProvider(
         //     create: (context) => SignUpController(
         //         signUp: context.read<RemoteSignUp>(),

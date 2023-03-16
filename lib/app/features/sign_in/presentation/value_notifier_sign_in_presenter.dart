@@ -5,12 +5,14 @@ import '../ui/ui.dart';
 
 part 'sign_in_state.dart';
 
-class SignInController extends ValueNotifier<SignInState> {
+class ValueNotifierSignInPresenter extends ValueNotifier<SignInState>
+    implements SignInPresenter {
   final SignIn signIn;
 
-  SignInController({required this.signIn}) : super(SignInInitial());
+  ValueNotifierSignInPresenter({required this.signIn}) : super(SignInInitial());
 
-  Future<void>? call({required String email, required String password}) async {
+  @override
+  Future<void> call({required String email, required String password}) async {
     value = SignInLoading();
 
     try {

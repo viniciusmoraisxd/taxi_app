@@ -1,4 +1,4 @@
-part of 'sign_in_controller.dart';
+part of 'value_notifier_sign_in_presenter.dart';
 
 abstract class SignInState {
   const SignInState();
