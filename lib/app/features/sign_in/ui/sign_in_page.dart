@@ -4,11 +4,10 @@ import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../../../shared/shared.dart';
+import '../../../shared/shared.dart';
 
-import '../../controllers/sign_in.dart';
-import '../ui.dart';
-import 'widgets/widgets.dart';
+import '../presentation/presentation.dart';
+import 'ui.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> with UIErrorManager {
-  late SignInController controller;
+  late ValueNotifierSignInPresenter presenter;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -26,13 +25,12 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
 
   @override
   void initState() {
-    controller = context.read<SignInController>();
+    presenter = context.read<ValueNotifierSignInPresenter>();
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
@@ -52,7 +50,6 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
               key: _formKey,
               child: Column(
                 children: [
-                  // HeaderWidget(height: constraints.maxHeight),
                   HeaderWidget(
                     height: constraints.maxHeight,
                     image: AppImages.login,
@@ -64,12 +61,13 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
                       emailController: emailController,
                       passwordController: passwordController),
                   ValueListenableBuilder(
-                    valueListenable: context.read<SignInController>(),
+                    valueListenable:
+                        context.read<ValueNotifierSignInPresenter>(),
                     builder: (context, value, child) {
                       if (value is SignInSuccess) {
                         SchedulerBinding.instance.addPostFrameCallback((_) {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, "/home", (route) => false);
+                          // Navigator.pushNamedAndRemoveUntil(
+                          //     context, "/home", (route) => false);
                         });
                       }
 
@@ -86,7 +84,7 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
                                 ? null
                                 : () async {
                                     if (_formKey.currentState!.validate()) {
-                                      await controller(
+                                      await presenter(
                                           email: emailController.text,
                                           password: passwordController.text);
                                     }
@@ -115,7 +113,7 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
                                     Navigator.of(context).pushNamed("/sign_up");
                                   },
                                   child: RichText(
-                                    key: const Key("Registre-se"),
+                                    key: const Key("signUpLink"),
                                     text: TextSpan(
                                         text: "Não possui uma conta?",
                                         style: TextStyle(
