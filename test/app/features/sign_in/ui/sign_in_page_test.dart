@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
+import 'package:taxi_app/app/core/core.dart';
 import 'package:taxi_app/app/features/features.dart';
-import 'package:taxi_app/app/features/sign_in/domain/domain.dart';
 import 'package:taxi_app/app/features/sign_in/presentation/presentation.dart';
 
 import '../../mocks/mocks.dart';

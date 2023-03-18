@@ -6,6 +6,8 @@ import 'package:provider/single_child_widget.dart';
 import 'core/core.dart';
 import 'features/sign_in/data/data.dart';
 import 'features/sign_in/presentation/presentation.dart';
+import 'features/sign_up/data/data.dart';
+import 'features/sign_up/presentation/presentation.dart';
 
 
 class Injector {
@@ -24,20 +26,20 @@ class Injector {
                 firebaseAuthClient: context.read<FirebaseAuthAdapter>())),
 
         // Usecases
-        // Provider(
-        //     create: (context) => RemoteSignUp(
-        //         firebaseAuthClient: context.read<FirebaseAuthAdapter>())),
-        // Provider(
-        //     create: (context) => RemoteAddUser(
-        //         databaseClient: context.read<FirebaseDatabaseAdapter>())),
+        Provider(
+            create: (context) => RemoteSignUp(
+                firebaseAuthClient: context.read<FirebaseAuthAdapter>())),
+        Provider(
+            create: (context) => RemoteAddUser(
+                databaseClient: context.read<FirebaseDatabaseAdapter>())),
 
         // Controllers
         ChangeNotifierProvider(
             create: (context) =>
                 ValueNotifierSignInPresenter(signIn: context.read<RemoteSignIn>())),
-        // ChangeNotifierProvider(
-        //     create: (context) => SignUpController(
-        //         signUp: context.read<RemoteSignUp>(),
-        //         addUser: context.read<RemoteAddUser>()))
+        ChangeNotifierProvider(
+            create: (context) => ValueNotifierSignUpPresenter(
+                signUp: context.read<RemoteSignUp>(),
+                addUser: context.read<RemoteAddUser>()))
       ];
 }

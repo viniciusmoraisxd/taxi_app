@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/shared.dart';
+import '../../shared.dart';
 import '../errors/errors.dart';
 
 mixin UIErrorManager {

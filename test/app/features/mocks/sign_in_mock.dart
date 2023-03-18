@@ -1,4 +1,5 @@
 import 'package:mocktail/mocktail.dart';
+import 'package:taxi_app/app/core/core.dart';
 import 'package:taxi_app/app/features/sign_in/domain/domain.dart';
 
 class SignInSpy extends Mock implements SignIn {

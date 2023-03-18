@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:taxi_app/app/features/features.dart';
+import 'package:taxi_app/app/features/sign_up/ui/pages/sign_up.dart';
 import '../firebase_options.dart';
 import 'injector.dart';
 import 'shared/shared.dart';
@@ -30,7 +30,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: AppTheme.lightTheme(context),
-        home: const SignInPage(),
+        home: const SignUpPage(),
       ),
     );
   }

@@ -7,7 +7,8 @@ enum UIError {
   emailInUse,
   userDisabled,
   userNotFound,
-  weakPassword
+  weakPassword,
+  invalidEmail
 }
 
 extension UIErrorExtension on UIError {
@@ -33,6 +34,8 @@ extension UIErrorExtension on UIError {
 
       case UIError.weakPassword:
         return "Senha fraca";
+      case UIError.invalidEmail:
+        return "E-mail inválido";
 
       default:
         return "Algo deu errado! Tente novamente mais tarde";

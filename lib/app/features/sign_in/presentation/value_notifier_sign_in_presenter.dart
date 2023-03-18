@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/core.dart';
+import '../../../shared/shared.dart';
 import '../domain/domain.dart';
 import '../ui/ui.dart';
 
