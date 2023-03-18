@@ -22,8 +22,8 @@ void main() {
     password = faker.internet.password();
     signInSpy.mockSignInResponse();
 
-    sut.addListener(() {
-      states.add(sut.value);
+    sut.state.addListener(() {
+      states.add(sut.state.value);
     });
   });
 

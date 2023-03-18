@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/shared.dart';
+import '../../../../shared/shared.dart';
 
 class SignUpFormWidget extends StatefulWidget {
   final double height;

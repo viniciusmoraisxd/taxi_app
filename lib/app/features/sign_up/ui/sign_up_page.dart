@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
-import 'package:provider/provider.dart';
 
-import '../../../../shared/shared.dart';
-import '../../domain/entities/entities.dart';
-import '../../presentation/presentation.dart';
+import '../../../shared/shared.dart';
+import '../domain/entities/entities.dart';
+import '../presentation/presentation.dart';
 import 'widgets/widgets.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  final ValueNotifierSignUpPresenter presenter;
+  const SignUpPage({Key? key, required this.presenter}) : super(key: key);
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> with UIErrorManager {
-  late ValueNotifierSignUpPresenter presenter;
+  // late ValueNotifierSignUpPresenter presenter;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -28,7 +28,6 @@ class _SignUpPageState extends State<SignUpPage> with UIErrorManager {
 
   @override
   void initState() {
-    presenter = context.read<ValueNotifierSignUpPresenter>();
     super.initState();
   }
 
@@ -64,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> with UIErrorManager {
                   ),
                   ValueListenableBuilder(
                     valueListenable:
-                        context.read<ValueNotifierSignUpPresenter>(),
+                        widget.presenter,
                     builder: (context, value, child) {
                       if (value is SignUpSuccess) {
                         SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -91,7 +90,7 @@ class _SignUpPageState extends State<SignUpPage> with UIErrorManager {
                                       final user = UserEntity(
                                           name: nameController.text.trim());
 
-                                      await presenter(
+                                      await widget.presenter(
                                           email: emailController.text,
                                           password: passwordController.text,
                                           userEntity: user);

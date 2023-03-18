@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
-import 'package:provider/provider.dart';
 
 import '../../../shared/shared.dart';
 
@@ -10,14 +9,15 @@ import '../presentation/presentation.dart';
 import 'ui.dart';
 
 class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+  final SignInPresenter presenter;
+  const SignInPage({Key? key, required this.presenter}) : super(key: key);
 
   @override
   State<SignInPage> createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage> with UIErrorManager {
-  late ValueNotifierSignInPresenter presenter;
+  // late ValueNotifierSignInPresenter presenter;
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -25,7 +25,7 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
 
   @override
   void initState() {
-    presenter = context.read<ValueNotifierSignInPresenter>();
+    // presenter = context.read<ValueNotifierSignInPresenter>();
     super.initState();
   }
 
@@ -61,8 +61,7 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
                       emailController: emailController,
                       passwordController: passwordController),
                   ValueListenableBuilder(
-                    valueListenable:
-                        context.read<ValueNotifierSignInPresenter>(),
+                    valueListenable: widget.presenter.state,
                     builder: (context, value, child) {
                       if (value is SignInSuccess) {
                         SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -84,7 +83,7 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
                                 ? null
                                 : () async {
                                     if (_formKey.currentState!.validate()) {
-                                      await presenter(
+                                      await widget.presenter(
                                           email: emailController.text,
                                           password: passwordController.text);
                                     }
