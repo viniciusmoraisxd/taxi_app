@@ -20,7 +20,6 @@ void main() {
     sut = ValueNotifierSignInPresenter(signIn: signInSpy);
     email = faker.internet.email();
     password = faker.internet.password();
-    signInSpy.mockSignInResponse();
 
     sut.state.addListener(() {
       states.add(sut.state.value);
