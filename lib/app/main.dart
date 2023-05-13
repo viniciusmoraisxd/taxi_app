@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
+import 'package:taxi_app/app/app_module.dart';
 
 import '../firebase_options.dart';
 import 'app_dependencies.dart';
-import 'features/features.dart';
 import 'shared/shared.dart';
 
 void main() async {
@@ -13,8 +13,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  AppDependencies.configure();
+  final getIt = GetIt.instance;
+  getIt.registerLazySingleton<AppDependencies>(() => AppDependencies());
 
   runApp(const App());
 }
@@ -32,9 +32,18 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme(context),
-      home: SignInPage(
-        presenter: GetIt.I.get(),
-      ),
+      onGenerateRoute: (settings) {
+        final dependencies = GetIt.I.get<AppDependencies>();
+        dependencies.getModuleInstance<AppModule>();
+        final routes = dependencies.generateRoutes();
+        if (routes.containsKey(settings.name)) {
+          return MaterialPageRoute(
+            builder: routes[settings.name]!,
+          );
+        }
+
+        return null;
+      },
     );
   }
 }

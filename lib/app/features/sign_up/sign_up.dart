@@ -1,2 +1,2 @@
-export 'sign_up_injector.dart';
+export 'sign_up_module.dart';
 export './ui/ui.dart';
