@@ -4,7 +4,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:faker/faker.dart';
 import 'package:taxi_app/app/core/core.dart';
 import 'package:taxi_app/app/features/sign_in/data/data.dart';
-import 'package:taxi_app/app/features/sign_in/domain/domain.dart';
 
 class FirebaseAuthClientSpy extends Mock implements FirebaseAuthClient {}
 

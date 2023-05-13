@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../shared.dart';
-import '../errors/errors.dart';
 
 mixin UIErrorManager {
   void handleError(BuildContext context, {required UIError uiError}) {

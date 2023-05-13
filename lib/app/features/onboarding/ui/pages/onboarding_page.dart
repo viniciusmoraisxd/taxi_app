@@ -21,7 +21,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
         description: "Get the best treatment for your animal with us",
         image: AppImages.login),
     OnboardingModel(
-        title: "Escolha sua rota", description: "Escolha seu destino e nós te levamos com conforto", image: AppImages.signUp),
+        title: "Escolha sua rota",
+        description: "Escolha seu destino e nós te levamos com conforto",
+        image: AppImages.signUp),
     OnboardingModel(
         title: "Título 3",
         description: "Descrição 3",
@@ -34,12 +36,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
       body: LayoutBuilder(builder: (context, constraints) {
         return Container(
           constraints: BoxConstraints(minHeight: constraints.maxHeight),
-          padding: const EdgeInsets.symmetric(vertical: 42, horizontal: 32),
           child: Column(
             children: [
-              SkipButtonWidget(
-                pageController: pageController,
-                page: onboardingContent.length,
+              Visibility(
+                visible: _currentIndex != onboardingContent.length - 1,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 42, horizontal: 32),
+                  child: SkipButtonWidget(
+                    pageController: pageController,
+                    page: onboardingContent.length,
+                  ),
+                ),
               ),
               Flexible(
                 child: PageView.builder(
@@ -56,10 +64,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                 ),
               ),
-              OnboardingNavigationWidget(
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 42, horizontal: 32),
+                child: OnboardingNavigationWidget(
                   onboardingContent: onboardingContent,
                   pageController: pageController,
-                  currentIndex: _currentIndex),
+                  currentIndex: _currentIndex,
+                  isFinalPage: _currentIndex == onboardingContent.length - 1,
+                ),
+              ),
             ],
           ),
         );
