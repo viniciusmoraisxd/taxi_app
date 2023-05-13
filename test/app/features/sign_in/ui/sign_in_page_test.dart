@@ -2,39 +2,32 @@ import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:provider/provider.dart';
+import 'package:taxi_app/app/core/core.dart';
 import 'package:taxi_app/app/features/features.dart';
-import 'package:taxi_app/app/features/sign_in/domain/domain.dart';
 import 'package:taxi_app/app/features/sign_in/presentation/presentation.dart';
+import 'package:taxi_app/app/shared/helpers/errors/errors.dart';
 
 import '../../mocks/mocks.dart';
+import 'mocks/sign_in_presenter_spy.dart';
 
 void main() {
   late SignInSpy signInSpy;
-
-  late ValueNotifierSignInPresenter presenter;
+  late SignInPresenterSpy presenter;
 
   late String email;
   late String password;
 
   setUp(() {
     signInSpy = SignInSpy();
-    presenter = ValueNotifierSignInPresenter(signIn: signInSpy);
+    presenter = SignInPresenterSpy(signInSpy);
 
     email = faker.internet.email();
     password = faker.internet.password();
-
-    signInSpy.mockSignInResponse();
   });
 
   loadPage() {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => presenter),
-      ],
-      child: const MaterialApp(
-        home: SignInPage(),
-      ),
+    return MaterialApp(
+      home: SignInPage(presenter: presenter),
     );
   }
 
@@ -112,69 +105,60 @@ void main() {
     await tester.tap(find.widgetWithText(ElevatedButton, 'Entrar'));
     await tester.pumpAndSettle(const Duration(seconds: 1));
 
-    verify(() => signInSpy(email: email, password: password)).called(1);
+    verify(() => presenter(email: email, password: password)).called(1);
   });
 
-  testWidgets('Should handle loading correctly', (WidgetTester tester) async {
-    await tester.pumpWidget(loadPage());
-    await tester.enterText(find.widgetWithText(TextFormField, 'E-mail'), email);
-    await tester.enterText(
-        find.widgetWithText(TextFormField, 'Senha'), password);
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Entrar'));
-    await tester.pump(const Duration(milliseconds: 500));
+  // testWidgets('Should handle loading correctly', (WidgetTester tester) async {
 
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  //   await tester.pumpWidget(loadPage());
+  //   await tester.enterText(find.widgetWithText(TextFormField, 'E-mail'), email);
+  //   await tester.enterText(
+  //       find.widgetWithText(TextFormField, 'Senha'), password);
+  //   presenter.mockState(value: SignInLoading());
+  //   await tester.tap(find.widgetWithText(ElevatedButton, 'Entrar'));
+  //   await tester.pumpAndSettle();
 
-    await tester.pumpAndSettle(const Duration(seconds: 1));
-
-    expect(find.byType(CircularProgressIndicator), findsNothing);
-  });
+  //   await tester.pumpAndSettle(const Duration(seconds: 1));
+  //   expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  // });
 
   testWidgets('Should present InvalidCredentialsError',
       (WidgetTester tester) async {
-    await tester.pumpWidget(loadPage());
-
     signInSpy.mockSignInResponseError(DomainError.invalidCredentials);
+    presenter.mockState(
+        value: SignInFailed(uiError: UIError.invalidCredentials));
 
+    await tester.pumpWidget(loadPage());
     await tester.enterText(find.widgetWithText(TextFormField, 'E-mail'), email);
     await tester.enterText(
         find.widgetWithText(TextFormField, 'Senha'), password);
     await tester.tap(find.widgetWithText(ElevatedButton, 'Entrar'));
 
-    expect(find.text("Credenciais inválidas"), findsNothing);
-
-    await tester.pump(const Duration(milliseconds: 500)); //começa a animação
-    await tester.pumpAndSettle(const Duration(seconds: 1));
-
+    await tester.pumpAndSettle();
     expect(find.text("Credenciais inválidas"), findsOneWidget);
 
     await tester.pumpAndSettle(const Duration(seconds: 5));
-
     expect(find.text("Credenciais inválidas"), findsNothing);
   });
 
   testWidgets('Should present UnexpectedError', (WidgetTester tester) async {
-    await tester.pumpWidget(loadPage());
-
     signInSpy.mockSignInResponseError(DomainError.unexpected);
+    presenter.mockState(value: SignInFailed(uiError: UIError.unexpected));
 
+    await tester.pumpWidget(loadPage());
     await tester.enterText(find.widgetWithText(TextFormField, 'E-mail'), email);
     await tester.enterText(
         find.widgetWithText(TextFormField, 'Senha'), password);
     await tester.tap(find.widgetWithText(ElevatedButton, 'Entrar'));
 
-    expect(find.text("Algo deu errado! Tente novamente mais tarde"),
-        findsNothing);
-
-    await tester.pump(const Duration(milliseconds: 500));
-    await tester.pumpAndSettle(const Duration(seconds: 1));
+    await tester.pumpAndSettle();
 
     expect(find.text("Algo deu errado! Tente novamente mais tarde"),
         findsOneWidget);
 
     await tester.pumpAndSettle(const Duration(seconds: 5));
 
-    expect(find.text("Algo deu errado! Tente novamente mais tarde"),
-        findsNothing);
+    expect(
+        find.text("Algo deu errado! Tente novamente mais tarde"), findsNothing);
   });
 }

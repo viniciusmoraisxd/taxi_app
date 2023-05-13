@@ -2,9 +2,9 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:mocktail/mocktail.dart';
-import 'package:taxi_app/app/features/features.dart';
-import 'package:taxi_app/app/features/sign_in/domain/domain.dart';
+import 'package:taxi_app/app/core/core.dart';
 import 'package:taxi_app/app/features/sign_in/presentation/presentation.dart';
+import 'package:taxi_app/app/shared/helpers/helpers.dart';
 
 import '../../mocks/mocks.dart';
 
@@ -20,10 +20,9 @@ void main() {
     sut = ValueNotifierSignInPresenter(signIn: signInSpy);
     email = faker.internet.email();
     password = faker.internet.password();
-    signInSpy.mockSignInResponse();
 
-    sut.addListener(() {
-      states.add(sut.value);
+    sut.state.addListener(() {
+      states.add(sut.state.value);
     });
   });
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:get_it/get_it.dart';
+import 'package:taxi_app/app/app_module.dart';
 
-import 'package:taxi_app/app/features/features.dart';
 import '../firebase_options.dart';
-import 'injector.dart';
+import 'app_dependencies.dart';
 import 'shared/shared.dart';
 
 void main() async {
@@ -13,6 +13,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  final getIt = GetIt.instance;
+  getIt.registerLazySingleton<AppDependencies>(() => AppDependencies());
+
   runApp(const App());
 }
 
@@ -24,14 +27,23 @@ class App extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark));
-    return MultiProvider(
-      providers: Injector(context: context).providers(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: AppTheme.lightTheme(context),
-        home: const SignInPage(),
-      ),
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: AppTheme.lightTheme(context),
+      onGenerateRoute: (settings) {
+        final dependencies = GetIt.I.get<AppDependencies>();
+        dependencies.getModuleInstance<AppModule>();
+        final routes = dependencies.generateRoutes();
+        if (routes.containsKey(settings.name)) {
+          return MaterialPageRoute(
+            builder: routes[settings.name]!,
+          );
+        }
+
+        return null;
+      },
     );
   }
 }

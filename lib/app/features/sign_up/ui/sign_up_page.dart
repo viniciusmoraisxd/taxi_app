@@ -4,34 +4,31 @@ import 'package:flutter/services.dart';
 
 
 import '../../../shared/shared.dart';
-
+import '../domain/entities/entities.dart';
 import '../presentation/presentation.dart';
-import 'ui.dart';
+import 'widgets/widgets.dart';
 
-class SignInPage extends StatefulWidget {
-  final SignInPresenter presenter;
-  const SignInPage({Key? key, required this.presenter}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  final ValueNotifierSignUpPresenter presenter;
+  const SignUpPage({Key? key, required this.presenter}) : super(key: key);
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> with UIErrorManager {
-  // late ValueNotifierSignInPresenter presenter;
+class _SignUpPageState extends State<SignUpPage> with UIErrorManager {
+  // late ValueNotifierSignUpPresenter presenter;
 
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmationPasswordController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    // presenter = context.read<ValueNotifierSignInPresenter>();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -52,25 +49,32 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
                 children: [
                   HeaderWidget(
                     height: constraints.maxHeight,
-                    image: AppImages.login,
-                    title: "Login",
-                    assetKey: "signInAsset",
+                    assetKey: 'signUpAsset',
+                    image: AppImages.signUp,
+                    title: "Criar conta",
                   ),
-                  FormContainerWidget(
-                      height: constraints.maxHeight,
-                      emailController: emailController,
-                      passwordController: passwordController),
+                  SignUpFormWidget(
+                    height: constraints.maxHeight,
+                    emailController: emailController,
+                    nameController: nameController,
+                    passwordController: passwordController,
+                    confirmationPasswordController:
+                        confirmationPasswordController,
+                  ),
                   ValueListenableBuilder(
-                    valueListenable: widget.presenter.state,
+                    valueListenable:
+                        widget.presenter,
                     builder: (context, value, child) {
-                      if (value is SignInSuccess) {
+                      if (value is SignUpSuccess) {
                         SchedulerBinding.instance.addPostFrameCallback((_) {
-                          // Navigator.pushNamedAndRemoveUntil(
-                          //     context, "/home", (route) => false);
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, "/home", (route) => false);
+                          });
                         });
                       }
 
-                      if (value is SignInFailed) {
+                      if (value is SignUpFailed) {
                         SchedulerBinding.instance.addPostFrameCallback((_) {
                           handleError(context, uiError: value.uiError);
                         });
@@ -79,21 +83,25 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
                       return Column(
                         children: [
                           ElevatedButton(
-                            onPressed: value is SignInLoading
+                            onPressed: value is SignUpLoading
                                 ? null
                                 : () async {
                                     if (_formKey.currentState!.validate()) {
+                                      final user = UserEntity(
+                                          name: nameController.text.trim());
+
                                       await widget.presenter(
                                           email: emailController.text,
-                                          password: passwordController.text);
+                                          password: passwordController.text,
+                                          userEntity: user);
                                     }
                                   },
-                            child: value is SignInLoading
+                            child: value is SignUpLoading
                                 ? const CircularProgressIndicator(
                                     color: AppColors.white,
                                   )
                                 : const Text(
-                                    "Entrar",
+                                    "Registrar",
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontFamily: "Gotham-SSm",
@@ -102,26 +110,27 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(
-                                vertical: constraints.maxHeight * 0.09),
+                                vertical: constraints.maxHeight * 0.04),
                             child: Column(
                               children: [
-                                // const SizedBox(height: 6),
                                 GestureDetector(
-                                  key: const Key("signupButton"),
+                                  key: const Key("signInButton"),
                                   onTap: () {
-                                    Navigator.of(context).pushNamed("/sign_up");
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                            "/sign_in", (route) => false);
                                   },
                                   child: RichText(
-                                    key: const Key("signUpLink"),
+                                    key: const Key("Logar"),
                                     text: TextSpan(
-                                        text: "Não possui uma conta?",
+                                        text: "Já tem uma conta?",
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: AppColors.primaryColor,
                                             fontFamily: "Gotham-SSm"),
                                         children: <TextSpan>[
                                           TextSpan(
-                                              text: " Registre-se",
+                                              text: ' Acessar',
                                               style: TextStyle(
                                                   color: AppColors.primaryColor,
                                                   fontSize: 12,

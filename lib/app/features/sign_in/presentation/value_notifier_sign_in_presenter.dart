@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/core.dart';
+import '../../../shared/shared.dart';
 import '../domain/domain.dart';
 import '../ui/ui.dart';
 
 part 'sign_in_state.dart';
 
-class ValueNotifierSignInPresenter extends ValueNotifier<SignInState>
-    implements SignInPresenter {
+class ValueNotifierSignInPresenter implements SignInPresenter {
+  @override
   final SignIn signIn;
 
-  ValueNotifierSignInPresenter({required this.signIn}) : super(SignInInitial());
+  ValueNotifierSignInPresenter({required this.signIn});
 
   @override
   Future<void> call({required String email, required String password}) async {
-    value = SignInLoading();
+    state.value = SignInLoading();
 
     try {
       await signIn.call(email: email, password: password);
 
-      value = SignInSuccess();
+      state.value = SignInSuccess();
     } on DomainError catch (e) {
       switch (e) {
         case DomainError.userDisabled:
-          value = SignInFailed(uiError: UIError.userDisabled);
+          state.value = SignInFailed(uiError: UIError.userDisabled);
           break;
         case DomainError.userNotFound:
-          value = SignInFailed(uiError: UIError.userNotFound);
+          state.value = SignInFailed(uiError: UIError.userNotFound);
           break;
         case DomainError.invalidCredentials:
-          value = SignInFailed(uiError: UIError.invalidCredentials);
+          state.value = SignInFailed(uiError: UIError.invalidCredentials);
           break;
         default:
-          value = SignInFailed(uiError: UIError.unexpected);
+          state.value = SignInFailed(uiError: UIError.unexpected);
           break;
       }
     }
 
     await Future.delayed(const Duration(seconds: 1));
-    value = SignInInitial();
+    state.value = SignInInitial();
   }
+
+  @override
+  ValueNotifier<SignInState> state = ValueNotifier(SignInInitial());
 }
