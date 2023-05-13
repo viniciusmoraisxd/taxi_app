@@ -13,7 +13,7 @@ class OnboardingModule extends Module {
   Map<String, WidgetBuilder> get routes => {
         '/sign_in': (context) {
           getIt.get<AppDependencies>().getModuleInstance<SignInModule>();
-          return SignUpPage(presenter: getIt.get());
+          return SignInPage(presenter: getIt.get());
         }
       };
 
