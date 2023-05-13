@@ -2,11 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:taxi_app/app/features/features.dart';
+import 'package:taxi_app/app/features/onboarding/onboarding_module.dart';
 
 import 'app_dependencies.dart';
 import 'core/core.dart';
 import 'core/module.dart';
-import 'features/sign_in/sign_in_module.dart';
 
 class AppModule extends Module {
   final getIt = GetIt.instance;
@@ -14,8 +14,8 @@ class AppModule extends Module {
   @override
   Map<String, WidgetBuilder> get routes => {
         '/': (context) {
-          getIt.get<AppDependencies>().getModuleInstance<SignInModule>();
-          return SignInPage(presenter: getIt.get());
+          getIt.get<AppDependencies>().getModuleInstance<OnboardingModule>();
+          return const OnboardingPage();
         }
       };
 
@@ -29,5 +29,8 @@ class AppModule extends Module {
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    getIt.unregister<FirebaseAuthClient>();
+    getIt.unregister<FirebaseFirestoreClient>();
+  }
 }

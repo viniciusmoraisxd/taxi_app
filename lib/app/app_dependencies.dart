@@ -4,6 +4,7 @@ import 'package:taxi_app/app/app_module.dart';
 import 'package:taxi_app/app/core/module.dart';
 import 'package:taxi_app/app/features/sign_in/sign_in_module.dart';
 
+import 'features/onboarding/onboarding_module.dart';
 import 'features/sign_up/sign_up_module.dart';
 
 class AppDependencies {
@@ -11,6 +12,7 @@ class AppDependencies {
 
   final Map<Type, Function()> moduleFactories = {
     AppModule: () => AppModule(),
+    OnboardingModule: () => OnboardingModule(),
     SignInModule: () => SignInModule(),
     SignUpModule: () => SignUpModule(),
     // Adicione outros módulos aqui
@@ -43,14 +45,4 @@ class AppDependencies {
 
     return allRoutes;
   }
-
-  // static void configure() {
-  //   getIt.registerLazySingleton<FirebaseAuthClient>(
-  //       () => FirebaseAuthAdapter(firebaseAuth: FirebaseAuth.instance));
-  //   getIt.registerLazySingleton<FirebaseFirestoreClient>(
-  //       () => FirebaseDatabaseAdapter());
-
-  //   SignUpModule().register(getIt);
-  //   SignInModule().register(getIt);
-  // }
 }
