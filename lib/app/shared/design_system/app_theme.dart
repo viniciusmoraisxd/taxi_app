@@ -7,6 +7,7 @@ class AppTheme {
       fontFamily: "Gotham-SSm",
       useMaterial3: true,
       primarySwatch: AppColors.primaryCustomColor,
+      colorScheme: const ColorScheme.light(),
       appBarTheme: AppBarTheme(
           elevation: 0,
           backgroundColor: AppColors.primaryColor,

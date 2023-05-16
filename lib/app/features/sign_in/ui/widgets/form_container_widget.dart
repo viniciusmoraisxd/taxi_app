@@ -70,9 +70,6 @@ class _FormContainerWidgetState extends State<FormContainerWidget> {
             ),
           ),
         ),
-        SizedBox(
-          height: widget.height * 0.06,
-        )
       ],
     );
   }

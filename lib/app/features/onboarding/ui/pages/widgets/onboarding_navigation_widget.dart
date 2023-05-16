@@ -7,12 +7,13 @@ class OnboardingNavigationWidget extends StatelessWidget {
   final List<OnboardingModel> onboardingContent;
   final PageController pageController;
   final int currentIndex;
-
+  final bool isFinalPage;
   const OnboardingNavigationWidget(
       {super.key,
       required this.onboardingContent,
       required this.pageController,
-      required this.currentIndex});
+      required this.currentIndex,
+      required this.isFinalPage});
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +47,9 @@ class OnboardingNavigationWidget extends StatelessWidget {
           width: 62,
           child: ElevatedButton(
             onPressed: () {
+              if (isFinalPage) {
+                Navigator.of(context).pushReplacementNamed('/sign_in');
+              } else {}
               pageController.nextPage(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.ease);

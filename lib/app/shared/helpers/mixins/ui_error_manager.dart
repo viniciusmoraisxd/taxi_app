@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../shared.dart';
-import '../errors/errors.dart';
 
 mixin UIErrorManager {
   void handleError(BuildContext context, {required UIError uiError}) {
@@ -9,6 +8,7 @@ mixin UIErrorManager {
       content: Text(uiError.description),
       backgroundColor: AppColors.errorBackgroundColor,
       duration: const Duration(seconds: 5),
+      
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);

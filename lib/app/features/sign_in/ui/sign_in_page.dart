@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
-
 import '../../../shared/shared.dart';
 
 import '../presentation/presentation.dart';
@@ -60,6 +59,9 @@ class _SignInPageState extends State<SignInPage> with UIErrorManager {
                       height: constraints.maxHeight,
                       emailController: emailController,
                       passwordController: passwordController),
+                  SizedBox(
+                    height: constraints.maxHeight * 0.07,
+                  ),
                   ValueListenableBuilder(
                     valueListenable: widget.presenter.state,
                     builder: (context, value, child) {

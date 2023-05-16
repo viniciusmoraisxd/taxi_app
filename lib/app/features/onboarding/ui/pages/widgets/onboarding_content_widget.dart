@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxi_app/app/shared/design_system/design_system.dart';
 
 class OnboardingContentWidget extends StatefulWidget {
@@ -50,7 +49,7 @@ class _OnboardingContentWidgetState extends State<OnboardingContentWidget>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(widget.image, height: widget.height * 0.35),
+          Image.asset(widget.image, height: widget.height * 0.4),
           const SizedBox(height: 32),
           Container(
               padding: const EdgeInsets.symmetric(horizontal: 44),
@@ -58,9 +57,7 @@ class _OnboardingContentWidgetState extends State<OnboardingContentWidget>
                 children: [
                   Text(
                     widget.title,
-                    style: AppTypography.customHeaderSmall(
-                      context,
-                    ),
+                    style: AppTypography.customHeaderSmall(context),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
