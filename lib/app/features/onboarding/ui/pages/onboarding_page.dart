@@ -17,17 +17,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final List<OnboardingModel> onboardingContent = [
     OnboardingModel(
-        title: "Let us give the best treatment",
-        description: "Get the best treatment for your animal with us",
-        image: AppImages.login),
+        title: "Chame uma corrida",
+        description:
+            "Chame uma corrida e seja buscado por um dos nossos motoristas nas proximidades",
+        image: AppImages.orderRide),
     OnboardingModel(
-        title: "Escolha sua rota",
-        description: "Escolha seu destino e nós te levamos com conforto",
-        image: AppImages.signUp),
+        title: "Confirme seu motorista",
+        description:
+            "Uma enorme rede de motoristas ajuda você a encontrar viagens confortáveis, seguras e baratas",
+        image: AppImages.confirmRide),
     OnboardingModel(
-        title: "Título 3",
-        description: "Descrição 3",
-        image: AppImages.enterOtp)
+        title: "Acompanhe sua viagem",
+        description:
+            "Conheça o seu motorista com antecedência e visualize a localização atual em tempo real no mapa",
+        image: AppImages.trackRide)
   ];
 
   @override

@@ -8,6 +8,7 @@ mixin UIErrorManager {
       content: Text(uiError.description),
       backgroundColor: AppColors.errorBackgroundColor,
       duration: const Duration(seconds: 5),
+      
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
