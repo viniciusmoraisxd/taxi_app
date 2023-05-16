@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:taxi_app/app/app_module.dart';
 import 'package:taxi_app/app/core/module.dart';
-import 'package:taxi_app/app/features/sign_in/sign_in_module.dart';
-
-import 'features/onboarding/onboarding_module.dart';
-import 'features/sign_up/sign_up_module.dart';
+import 'features/features.dart';
 
 class AppDependencies {
   static final getIt = GetIt.instance;
@@ -15,7 +12,7 @@ class AppDependencies {
     OnboardingModule: () => OnboardingModule(),
     SignInModule: () => SignInModule(),
     SignUpModule: () => SignUpModule(),
-    // Adicione outros módulos aqui
+    HomeModule: () => HomeModule(),
   };
 
   final Map<Type, Module> _loadedModules = {};

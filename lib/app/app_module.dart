@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:taxi_app/app/features/features.dart';
-import 'package:taxi_app/app/features/onboarding/onboarding_module.dart';
 
 import 'app_dependencies.dart';
 import 'core/core.dart';
