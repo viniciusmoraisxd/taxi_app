@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
-import 'package:taxi_app/app/app_module.dart';
+import 'package:taxi_app/app/features/home/home_module.dart';
 
 import '../firebase_options.dart';
 import 'app_dependencies.dart';
@@ -32,9 +32,10 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme(context),
+      initialRoute: "/home",
       onGenerateRoute: (settings) {
         final dependencies = GetIt.I.get<AppDependencies>();
-        dependencies.getModuleInstance<AppModule>();
+        dependencies.getModuleInstance<HomeModule>();
         final routes = dependencies.generateRoutes();
         if (routes.containsKey(settings.name)) {
           return MaterialPageRoute(

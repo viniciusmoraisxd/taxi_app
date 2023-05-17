@@ -9,7 +9,7 @@ class HomeModule extends Module {
 
   @override
   Map<String, WidgetBuilder> get routes => {
-        '/home': (context) => const HomePage(),
+        '/home': (context) => HomePage(),
       };
 
   @override

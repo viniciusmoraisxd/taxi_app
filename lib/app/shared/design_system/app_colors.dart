@@ -7,7 +7,7 @@ class AppColors {
   static Color primaryColor = const Color(0xFF1A1A1A);
   static Color accentColor = const Color(0xFFFFC727);
 
-  static Color cardBackgroundColor = const Color(0xFFF0f1f5);
+  static Color cardBackgroundColor = const Color(0xFFFFFFFF);
   // static Color shadowColor = const Color(0xfff00000026);
   static Color shadowColor = const Color.fromARGB(15, 0, 0, 0);
   static MaterialAccentColor errorBackgroundColor = Colors.redAccent;
