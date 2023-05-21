@@ -15,10 +15,15 @@ dependencies:
   flutter_svg:
   firebase_auth:
   firebase_core:
-  mocktail:
+  mocktail: ^0.3.0
   faker:
   cloud_firestore:
+  lottie: ^2.3.2
   get_it:
+  google_maps_flutter: ^2.2.6
+  flutter_polyline_points: ^1.0.0
+  dio:
+  flutter_config: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +37,7 @@ flutter:
   assets:
     - assets/images/
     - assets/gifs/
+    - assets/lottie/
 
   fonts:
       - family: Gotham-SSm

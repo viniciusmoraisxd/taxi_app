@@ -25,6 +25,7 @@ class AppModule extends Module {
 
     getIt.registerLazySingleton<FirebaseFirestoreClient>(
         () => FirebaseDatabaseAdapter());
+
   }
 
   @override

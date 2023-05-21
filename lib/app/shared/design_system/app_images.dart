@@ -11,8 +11,11 @@ class AppImages {
   static const trackRide = "$gifsPath/track_ride.gif";
   static const orderRide = "$gifsPath/order_ride.gif";
 
-
+  static const lottieHomeBuilding = "$lottiePath/house_building.json";
+  static const lottieCityOfficeBuilding =
+      "$lottiePath/city_office_building.json";
 }
 
 const String path = "assets/images";
 const String gifsPath = "assets/gifs";
+const String lottiePath = "assets/lottie";

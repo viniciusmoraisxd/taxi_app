@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:taxi_app/app/features/home/home_module.dart';
 
@@ -13,6 +14,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FlutterConfig.loadEnvVariables();
+  
   final getIt = GetIt.instance;
   getIt.registerLazySingleton<AppDependencies>(() => AppDependencies());
 

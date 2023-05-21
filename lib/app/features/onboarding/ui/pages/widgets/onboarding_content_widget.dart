@@ -57,7 +57,7 @@ class _OnboardingContentWidgetState extends State<OnboardingContentWidget>
                 children: [
                   Text(
                     widget.title,
-                    style: AppTypography.customHeaderSmall(context),
+                    style: AppTypography.customHeadlineSmall(context),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),

@@ -14,7 +14,7 @@ class AppTypography {
             fontWeight: fontWeight,
           );
 
-  static TextStyle? customHeaderSmall(BuildContext context,
+  static TextStyle? customHeadlineSmall(BuildContext context,
           {Color? color, FontWeight? fontWeight}) =>
       Theme.of(context).textTheme.headlineSmall?.copyWith(
             color: color,
